@@ -47,6 +47,14 @@ export default function Home() {
               회원가입하고 시작하기
             </Link>
           </SignedOut>
+          <SignedIn>
+            <Link
+              href="/scan"
+              className="flex h-12 w-full items-center justify-center rounded-full bg-emerald-600 px-6 text-white transition-colors hover:bg-emerald-700 md:w-auto"
+            >
+              제품 스캔
+            </Link>
+          </SignedIn>
           <Link
             className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
             href="/instruments"
