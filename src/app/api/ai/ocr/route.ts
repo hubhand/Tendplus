@@ -35,7 +35,7 @@ export async function POST(req: Request) {
 JSON 형식으로 반환:
 {
   "product_name": "제품명",
-  "ingredients": ["성분1", "성분2", ...],
+  "ingredients_list": ["성분1", "성분2", ...],
   "confidence": 0.9
 }`;
 

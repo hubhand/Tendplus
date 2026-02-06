@@ -5,7 +5,7 @@ import Webcam from 'react-webcam';
 import { resizeImageClient } from '@/lib/utils/image-resize.client';
 
 interface CameraCaptureProps {
-  onCapture: (data: { product_name?: string; ingredients?: string[]; confidence?: number }) => void;
+  onCapture: (data: { product_name?: string; ingredients_list?: string[]; confidence?: number }) => void;
 }
 
 export function CameraCapture({ onCapture }: CameraCaptureProps) {
