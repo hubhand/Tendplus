@@ -1,0 +1,37 @@
+# TEND+ v1.9 - Cursor Rules
+
+🚨 CRITICAL RULES 🚨
+
+1. PHASE LOCK:
+   - 현재 Phase에 명시되지 않은 테이블/API/파일 생성 금지
+   - 다음 Phase 미리 구현 금지
+
+2. COLUMN NAMES (EXACT):
+   - ingredients_list (NOT ingredients!)
+   - notified_at (NOT notified!)
+   - name_ko_normalized (Generated Column)
+
+3. QUERY SAFETY:
+   - .maybeSingle() ONLY
+   - .single() 절대 금지
+
+4. ID GENERATION:
+   - UUID는 DB에서만 생성
+   - nanoid() 사용 금지
+
+5. GENERATED COLUMN:
+   - 생성 후 절대 수정 금지
+   - ALTER COLUMN 금지
+   - DROP TABLE 금지
+
+6. ADMIN CLIENT:
+   - /api/admin, /api/cron only
+
+7. FILE NAMING:
+   - *.client.ts → Browser only
+   - *.server.ts → Server only
+
+8. PACKAGE MANAGER:
+   - pnpm ONLY (NOT npm!)
+
+NO SHORTCUTS. VERIFY EVERYTHING.
