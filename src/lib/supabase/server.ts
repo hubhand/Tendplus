@@ -45,3 +45,26 @@ export const createClient = createServerSupabaseClient;
 export function createAdminClient() {
   return createSupabaseClient(supabaseUrl, supabaseServiceRoleKey);
 }
+
+/**
+ * 현재 로그인한 사용자의 users_profile.id (uuid) 반환
+ * - Clerk auth().userId로 clerk_id 조회
+ * - API 라우트에서 인증 확인용
+ */
+export async function getCurrentUserId(): Promise<string | null> {
+  const { userId } = await auth();
+  if (!userId) return null;
+
+  const supabase = await createServerSupabaseClient();
+  const { data, error } = await supabase
+    .from('users_profile')
+    .select('id')
+    .eq('clerk_id', userId)
+    .maybeSingle();
+
+  if (error) {
+    console.error('getCurrentUserId error:', error);
+    return null;
+  }
+  return data?.id ?? null;
+}

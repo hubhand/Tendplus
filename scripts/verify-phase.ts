@@ -162,18 +162,21 @@ if (phase === 2) {
     errors++;
   }
 
-  // 3. JWT template 확인
-  console.log('\n3. JWT template "supabase" 확인...');
+  // 3. Clerk Supabase 연동 확인 (Native Integration 또는 JWT Template)
+  console.log('\n3. Clerk Supabase 연동 확인...');
   const clientFile = readFile('src/lib/supabase/client.ts');
   const serverFile = readFile('src/lib/supabase/server.ts');
-  const hasTemplate =
+  const hasNativeIntegration =
+    (clientFile && /getToken|accessToken/.test(clientFile)) ||
+    (serverFile && /getToken|accessToken/.test(serverFile));
+  const hasJwtTemplate =
     (clientFile && /template:\s*['"]supabase['"]/.test(clientFile)) ||
     (serverFile && /template:\s*['"]supabase['"]/.test(serverFile));
-  if (hasTemplate) {
-    console.log('✅ JWT template 이름 정확');
+  if (hasNativeIntegration || hasJwtTemplate) {
+    console.log('✅ Clerk Supabase 연동 확인 (Native Integration 또는 JWT Template)');
   } else if (clientFile || serverFile) {
-    console.error('❌ JWT template 이름 오류!');
-    console.error('   수정: getToken({ template: "supabase" }) 확인 (소문자)');
+    console.error('❌ Clerk Supabase 연동 누락!');
+    console.error('   수정: getToken() 또는 accessToken 사용 확인');
     errors++;
   } else {
     console.log('⚠️  supabase 파일 없음 (Phase 2 미완료)');
