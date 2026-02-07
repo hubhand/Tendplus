@@ -107,13 +107,13 @@ CREATE TABLE product_ingredients (
 CREATE OR REPLACE FUNCTION get_current_user_id()
 RETURNS uuid AS $$
 DECLARE
-  clerk_id text;
+  v_clerk_id text;
   user_uuid uuid;
 BEGIN
-  clerk_id := auth.jwt()->>'sub';
-  IF clerk_id IS NULL THEN RETURN NULL; END IF;
+  v_clerk_id := auth.jwt()->>'sub';
+  IF v_clerk_id IS NULL THEN RETURN NULL; END IF;
   SELECT id INTO user_uuid FROM users_profile
-  WHERE users_profile.clerk_id = clerk_id LIMIT 1;
+  WHERE users_profile.clerk_id = v_clerk_id LIMIT 1;
   RETURN user_uuid;
 END;
 $$ LANGUAGE plpgsql STABLE SECURITY DEFINER;

@@ -1,8 +1,10 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Webcam from 'react-webcam';
 import { resizeImageClient } from '@/lib/utils/image-resize.client';
+import { ManualInputForm } from './ManualInputForm';
 
 interface CameraCaptureProps {
   onCapture: (data: {
@@ -15,15 +17,43 @@ interface CameraCaptureProps {
 type FacingMode = 'user' | 'environment';
 
 export function CameraCapture({ onCapture }: CameraCaptureProps) {
+  const router = useRouter();
   const webcamRef = useRef<Webcam>(null);
+  const videoTrackRef = useRef<MediaStreamTrack | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isFocusing, setIsFocusing] = useState(false);
   const [facingMode, setFacingMode] = useState<FacingMode>('environment');
   const [showManualInput, setShowManualInput] = useState(false);
+
+  const handleUserMedia = (stream: MediaStream | null) => {
+    videoTrackRef.current = stream?.getVideoTracks()[0] ?? null;
+  };
+
+  const handleFocus = async () => {
+    const track = videoTrackRef.current;
+    if (!track) return;
+
+    const caps = track.getCapabilities?.() as { focusMode?: string[] } | undefined;
+    if (!caps?.focusMode?.length) return;
+
+    setIsFocusing(true);
+    try {
+      await track.applyConstraints({
+        focusMode: 'single-shot',
+      } as unknown as MediaTrackConstraints);
+      await new Promise((r) => setTimeout(r, 600));
+    } catch {
+      // focusMode 미지원 시 무시
+    } finally {
+      setIsFocusing(false);
+    }
+  };
 
   const handleCapture = async () => {
     setIsProcessing(true);
 
     try {
+      await handleFocus();
       const imageSrc = webcamRef.current?.getScreenshot();
       if (!imageSrc) throw new Error('No image');
 
@@ -37,6 +67,11 @@ export function CameraCapture({ onCapture }: CameraCaptureProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ imageBase64: resized }),
       });
+
+      if (response.status === 401) {
+        router.push('/sign-in?redirect_url=' + encodeURIComponent('/scan'));
+        return;
+      }
 
       const result = await response.json();
 
@@ -63,13 +98,16 @@ export function CameraCapture({ onCapture }: CameraCaptureProps) {
     facingMode: { ideal: facingMode },
     width: { ideal: 1280 },
     height: { ideal: 720 },
-  };
+    focusMode: { ideal: 'continuous' },
+  } as MediaTrackConstraints;
 
   if (showManualInput) {
     return (
       <ManualInputForm
         onCapture={onCapture}
         onBack={() => setShowManualInput(false)}
+        showBackButton
+        backButtonText="← 카메라로 돌아가기"
       />
     );
   }
@@ -82,6 +120,7 @@ export function CameraCapture({ onCapture }: CameraCaptureProps) {
           ref={webcamRef}
           screenshotFormat="image/jpeg"
           videoConstraints={videoConstraints}
+          onUserMedia={handleUserMedia}
           className="rounded-lg"
         />
         <button
@@ -108,7 +147,16 @@ export function CameraCapture({ onCapture }: CameraCaptureProps) {
         </button>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2 justify-center">
+        <button
+          type="button"
+          onClick={handleFocus}
+          disabled={isFocusing || isProcessing}
+          className="px-4 py-3 border border-zinc-300 rounded-lg text-zinc-700 hover:bg-zinc-100 disabled:opacity-50 dark:border-zinc-600 dark:text-zinc-300 dark:hover:bg-zinc-800"
+          title="촬영 전 초점을 잡습니다"
+        >
+          {isFocusing ? '초점 잡는 중...' : '🎯 초점'}
+        </button>
         <button
           onClick={handleCapture}
           disabled={isProcessing}
@@ -124,90 +172,6 @@ export function CameraCapture({ onCapture }: CameraCaptureProps) {
           직접 입력
         </button>
       </div>
-    </div>
-  );
-}
-
-interface ManualInputFormProps {
-  onCapture: (data: {
-    product_name?: string;
-    ingredients_list?: string[];
-    confidence?: number;
-  }) => void;
-  onBack: () => void;
-}
-
-function ManualInputForm({ onCapture, onBack }: ManualInputFormProps) {
-  const [productName, setProductName] = useState('');
-  const [ingredientsText, setIngredientsText] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const ingredients_list = ingredientsText
-      .split(/[,，\n]/)
-      .map((s) => s.trim())
-      .filter(Boolean);
-
-    if (ingredients_list.length === 0) return;
-
-    onCapture({
-      product_name: productName.trim() || undefined,
-      ingredients_list,
-      confidence: 1,
-    });
-  };
-
-  return (
-    <div className="w-full max-w-md">
-      <button
-        type="button"
-        onClick={onBack}
-        className="mb-4 text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
-      >
-        ← 카메라로 돌아가기
-      </button>
-
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div>
-          <label htmlFor="productName" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-            제품명 (선택)
-          </label>
-          <input
-            id="productName"
-            type="text"
-            value={productName}
-            onChange={(e) => setProductName(e.target.value)}
-            placeholder="예: 수분 크림"
-            className="w-full rounded-lg border border-zinc-300 px-4 py-2 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="ingredients" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
-            성분 <span className="text-red-500">*</span>
-          </label>
-          <textarea
-            id="ingredients"
-            value={ingredientsText}
-            onChange={(e) => setIngredientsText(e.target.value)}
-            placeholder={'전체 성분을 입력하거나, 확인이 필요한 알러지 성분만 입력해도 됩니다\n예: 정제수, 글리세린, 땅콩\n또는 알러지 확인용: 땅콩, 대두'}
-            rows={5}
-            required
-            className="w-full rounded-lg border border-zinc-300 px-4 py-2 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white"
-          />
-          <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
-            쉼표 또는 줄바꿈으로 구분. 땅콩 알러지 등 확인할 성분만 입력해도 됩니다.
-          </p>
-        </div>
-
-        <button
-          type="submit"
-          disabled={!ingredientsText.trim()}
-          className="px-6 py-3 bg-emerald-600 text-white rounded-lg disabled:opacity-50"
-        >
-          확인
-        </button>
-      </form>
     </div>
   );
 }

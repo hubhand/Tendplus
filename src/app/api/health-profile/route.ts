@@ -63,6 +63,26 @@ export async function GET() {
   return Response.json(result);
 }
 
+export async function POST() {
+  const userId = await getCurrentUserId();
+  if (!userId) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.from('health_profiles').upsert(
+    { user_id: userId },
+    { onConflict: 'user_id' }
+  );
+
+  if (error) {
+    console.error('health_profiles POST error:', error);
+    return Response.json({ error: 'DB error' }, { status: 500 });
+  }
+
+  return Response.json({ success: true });
+}
+
 export async function PUT(req: Request) {
   const userId = await getCurrentUserId();
   if (!userId) {
