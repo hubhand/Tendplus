@@ -1,6 +1,13 @@
 # Dependencies
 node_modules/
 .pnpm-store/
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
 # Environment variables (보안 - 절대 커밋 금지!)
 .env
@@ -13,10 +20,14 @@ node_modules/
 # Next.js
 .next/
 out/
+next-env.d.ts
 
 # Build
 dist/
 build/
+
+# Testing
+/coverage
 
 # Debug
 npm-debug.log*
@@ -33,6 +44,9 @@ yarn-error.log*
 # OS
 .DS_Store
 Thumbs.db
+
+# Misc
+*.pem
 
 # Vercel
 .vercel

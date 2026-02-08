@@ -169,7 +169,7 @@ cd tendplus
 - Cursor에서 **File → Open Folder** → `tendplus` 폴더 선택
 - 또는 `code tendplus` (VS Code/Cursor CLI)
 
-⚠️ **반드시 `tendplus` 폴더를 열어야 함!** (상위 폴더 `tend_plus_20260205`가 아님)
+⚠️ **반드시 `tendplus` 폴더를 열어야 함!** (상위 폴더 `[Your Project Folder]`가 아님)
 
 ---
 
@@ -321,7 +321,6 @@ curl https://api.clerk.com/v1/jwt_templates -H "Authorization: Bearer $CLERK_SEC
 
 ---
 
-### [HUMAN] 2.1.2 — Clerk Webhook 설정
 
 **언제:** Phase 2 코드 작성 후, 배포 전
 
@@ -344,7 +343,7 @@ curl https://api.clerk.com/v1/jwt_templates -H "Authorization: Bearer $CLERK_SEC
 1. Resend (resend.com) 가입 후 API Key 발급
 2. .env.local에 추가:
 ```
-RESEND_API_KEY=re_xxxxxxxxxxxx
+RESEND_API_KEY=re_your_resend_api_key
 ```
 
 ---

@@ -205,7 +205,7 @@
 > 
 > **완료 후** Cursor에서 `tendplus` 폴더 열기 (프로젝트 루트)
 
-- [ ] **0.1.2** 패키지 설치
+- [x] **0.1.2** 패키지 설치
 
 > **Cursor 프롬프트:** package.json에 dependencies 추가해줘.
 > ```
@@ -224,7 +224,7 @@
 > pnpm install
 > ```
 
-- [ ] **0.1.3** package.json 수정
+- [x] **0.1.3** package.json 수정
 
 > **Cursor 프롬프트:**
 > ```
@@ -267,7 +267,7 @@
 
 ### 0.2 환경변수 설정
 
-- [ ] **0.2.1** `.env.local` 생성
+- [x] **0.2.1** `.env.local` 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -322,7 +322,7 @@
 
 ### 0.3 .cursorrules 생성
 
-- [ ] **0.3.1** `.cursorrules` 파일 생성
+- [x] **0.3.1** `.cursorrules` 파일 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -372,7 +372,7 @@
 
 ### 0.4 vercel.json 생성
 
-- [ ] **0.4.1** `vercel.json` 생성
+- [x] **0.4.1** `vercel.json` 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -401,7 +401,7 @@
 > - **verify-schema.ts:** Supabase 스키마 검증 (get_table_columns RPC), prebuild 시 자동 실행, Phase 0에서는 스킵
 > - **verify-phase.ts:** Phase별 코드 검증 (.single(), 컬럼명, Phase Lock 등), 수동 실행 `pnpm verify N`, Windows 호환 (grep 대신 Node.js fs)
 
-- [ ] **0.5.1** `scripts/verify-schema.ts` 생성
+- [x] **0.5.1** `scripts/verify-schema.ts` 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -463,11 +463,11 @@
 > - 빌드 실패 방지
 > ```
 
-- [ ] **0.5.2** `scripts/verify-phase.ts` 생성 (Windows 호환)
+- [x] **0.5.2** `scripts/verify-phase.ts` 생성 (Windows 호환)
 
 > **Cursor 프롬프트:** scripts/verify-phase.ts 생성. 루트 scripts/ 참조. package.json에 "verify": "tsx scripts/verify-phase.ts" 추가.
 
-- [ ] **0.5.3** `scripts/check-node-version.ts` 생성 (보안)
+- [x] **0.5.3** `scripts/check-node-version.ts` 생성 (보안)
 
 > **Cursor 프롬프트:**
 > ```
@@ -594,7 +594,7 @@
 
 ### 1.1 스키마 생성
 
-- [ ] **1.1.1** schema-tendplus-v1.9.sql 생성 (테이블 + 함수 + 인덱스만)
+- [x] **1.1.1** schema-tendplus-v1.9.sql 생성 (테이블 + 함수 + 인덱스만)
 
 > **Cursor 프롬프트:**
 > ```
@@ -849,7 +849,7 @@
 
 ### 1.2 RLS 정책
 
-- [ ] **1.2.1** RLS 정책 실행
+- [x] **1.2.1** RLS 정책 실행
 
 > **Cursor 프롬프트:**
 > ```
@@ -937,7 +937,7 @@
 > 2. ocr-scans (public: false)
 > ```
 
-- [ ] **1.3.2** Storage RLS (수정 #5)
+- [x] **1.3.2** Storage RLS (수정 #5)
 
 > **Cursor 프롬프트:**
 > ```
@@ -1060,7 +1060,7 @@
 
 ### 2.2 Clerk 통합
 
-- [ ] **2.2.1** Supabase 클라이언트 생성
+- [x] **2.2.1** Supabase 클라이언트 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -1145,7 +1145,7 @@
 
 ### 2.3 Webhook (수정 #3, #6, #18)
 
-- [ ] **2.3.1** Webhook 라우트 생성
+- [x] **2.3.1** Webhook 라우트 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -1294,7 +1294,7 @@
 
 ### 2.4 미들웨어 (수정 #1)
 
-- [ ] **2.4.1** 미들웨어 생성
+- [x] **2.4.1** 미들웨어 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -1411,7 +1411,7 @@
 
 ### 3.1 Rate Limiter (v1.7 Fail Closed)
 
-- [ ] **3.1.1** Rate Limiter 생성
+- [x] **3.1.1** Rate Limiter 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -1497,7 +1497,7 @@
 
 ### 3.2 클라이언트 이미지 리사이징 (v1.7 신규)
 
-- [ ] **3.2.1** 이미지 리사이징 유틸 생성
+- [x] **3.2.1** 이미지 리사이징 유틸 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -1571,7 +1571,7 @@
 
 ### 3.3 Gemini OCR
 
-- [ ] **3.3.1** OCR API 생성
+- [x] **3.3.1** OCR API 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -1666,7 +1666,7 @@
 
 ### 3.4 카메라 UI
 
-- [ ] **3.4.1** 카메라 컴포넌트 생성
+- [x] **3.4.1** 카메라 컴포넌트 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -1804,7 +1804,7 @@
 
 ### 4.1 식약처 API 연동
 
-- [ ] **4.1.1** `src/lib/api/mfds.ts` 생성
+- [x] **4.1.1** `src/lib/api/mfds.ts` 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -1867,7 +1867,7 @@
 
 ### 5.1 Pantry Check
 
-- [ ] **5.1.1** `src/app/api/cron/pantry-check/route.ts` 생성
+- [x] **5.1.1** `src/app/api/cron/pantry-check/route.ts` 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -1982,7 +1982,7 @@
 
 ### 7.1 테이블 생성
 
-- [ ] **7.1.1** brands, link_clicks, audit_logs 테이블 생성
+- [x] **7.1.1** brands, link_clicks, audit_logs 테이블 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -2032,7 +2032,7 @@
 
 ### 7.2 RLS 정책 (수정 #10)
 
-- [ ] **7.2.1** brands, link_clicks, audit_logs RLS 생성
+- [x] **7.2.1** brands, link_clicks, audit_logs RLS 생성
 
 > ```sql
 > -- brands (공개 READ)
@@ -2059,7 +2059,7 @@
 
 ### 7.3 BuyButton 컴포넌트
 
-- [ ] **7.3.1** `src/components/commerce/BuyButton.tsx` 생성
+- [x] **7.3.1** `src/components/commerce/BuyButton.tsx` 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -2098,7 +2098,7 @@
 
 ### 7.4 링크 클릭 API
 
-- [ ] **7.4.1** `src/app/api/commerce/click/route.ts` 생성
+- [x] **7.4.1** `src/app/api/commerce/click/route.ts` 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -2127,7 +2127,7 @@
 
 ### 8.1 Role 제약 (수정 #20)
 
-- [ ] **8.1.1** Phase 1 스키마 확인
+- [x] **8.1.1** Phase 1 스키마 확인
 
 > **수정 #20: Phase 1에서 이미 role CHECK 생성됨**
 > Phase 8에서는 추가 작업 불필요.
@@ -2142,7 +2142,7 @@
 
 ### 8.2 어드민 테이블 RLS (수정 #10)
 
-- [ ] **8.2.1** disclaimers, ocr_corrections 테이블 및 RLS
+- [x] **8.2.1** disclaimers, ocr_corrections 테이블 및 RLS
 
 > ```sql
 > -- disclaimers (공개 READ, 관리자 WRITE)
@@ -2190,7 +2190,7 @@
 
 ### 8.3 check-role 유틸
 
-- [ ] **8.3.1** `src/lib/auth/check-role.ts` 생성
+- [x] **8.3.1** `src/lib/auth/check-role.ts` 생성
 
 > ```typescript
 > import { getCurrentUserId } from '@/lib/supabase/server';
@@ -2229,7 +2229,7 @@
 
 ### 9.1 AES-256-GCM 암호화
 
-- [ ] **9.1.1** `src/lib/security/encryption.ts` 생성
+- [x] **9.1.1** `src/lib/security/encryption.ts` 생성
 
 > **Cursor 프롬프트:**
 > ```
@@ -2268,7 +2268,7 @@
 
 ### 9.1.3 health_profiles 암호화
 
-- [ ] **9.1.3** health_profiles 저장/조회 시 encrypt/decrypt 적용
+- [x] **9.1.3** health_profiles 저장/조회 시 encrypt/decrypt 적용
 
 > medications, allergies 등 민감 데이터 저장 시:
 > `encrypt(JSON.stringify(medications))` 사용
@@ -2604,7 +2604,7 @@
 > export async function sendEmail(to: string, subject: string, html: string) {
 >   try {
 >     const { data, error } = await resend.emails.send({
->       from: 'TEND+ <noreply@tendplus.com>',
+>       from: 'TEND+ <noreply@example.com>',
 >       to,
 >       subject,
 >       html,
